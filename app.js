@@ -2,7 +2,8 @@ import express from "express"
 import dotenv from "dotenv"
 import conn from "./db.js"
 import pageRoute from "./routes/pageRoute.js"
-import photoRouter from './routes/photoRoute.js';
+import photoRoute from './routes/photoRoute.js';
+import userRoute from './routes/userRoute.js';
 
 dotenv.config()
 
@@ -18,10 +19,12 @@ app.set("view engine","ejs")
 // static files middleware
 app.use(express.static("public"))
 app.use(express.json())
+app.use(express.urlencoded({extended:true}))
 
 //routes
 app.use("/",pageRoute)
-app.use('/photos', photoRouter);
+app.use('/photos', photoRoute);
+app.use('/users', userRoute);
 
 // app.get("/",(req,res)=>{
 //     res.render("index")
@@ -35,6 +38,3 @@ app.listen(port,()=>{
     console.log(`Application running on port:${port}`)
 })
 
-// ethemkizilyer3546
-// f9ERnmcdoiH1SZ6R
-// mongodb+srv://ethemkizilyer3546:<password>@cluster0.2esmrii.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0

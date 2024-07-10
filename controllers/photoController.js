@@ -5,7 +5,7 @@ const createPhoto = async (req, res) => {
     console.log('REQ BODY', req.body);
     const photo = await Photo.create(req.body);
     res.status(201).json({
-        succeded: true,
+      succeded: true,
       photo,
     });
   } catch (error) {
