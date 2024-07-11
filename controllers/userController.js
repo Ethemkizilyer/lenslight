@@ -6,6 +6,7 @@ const createUser = async (req, res) => {
   try {
     console.log('REQ BODY', req.body);
     const user = await User.create(req.body);
+    res.redirect("/login")
     res.status(201).json({
       succeded: true,
       user,
@@ -36,10 +37,13 @@ const loginUser = async (req, res) => {
     }
 
     if(same){
-      res.status(200).json({
-        user,
-        token:createToken(user._id)
-      });
+
+const token =createToken(user._id)
+res.cookie("jsonwebtoken",token,{
+  httpOnly:true,maxAge:1000*60*60*24,
+})
+
+      res.redirect("/users/dashboard")
     } else {
       res.status(401).json({
         succeded: false,
@@ -61,4 +65,10 @@ const createToken= (userId)=>{
   })
 }
 
-export { createUser,loginUser };
+const getDashboardPage=(req,res)=>{
+  res.render("dashboard",{
+      link:"dashboard"  
+     })
+  }
+
+export { createUser,loginUser,getDashboardPage };
