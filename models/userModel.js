@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcrypt';
 import validator from 'validator';
 
@@ -19,7 +19,17 @@ const userSchema = new mongoose.Schema({
     type:String,
     required: [true,"Password area is required"],
     minLength:[4,"At least 4 characters"]
-  }
+  },
+  followers:[
+    {type:Schema.Types.ObjectId,
+    ref:"User"
+    }
+  ],
+  followings:[
+    {type:Schema.Types.ObjectId,
+    ref:"User"
+    }
+  ]
 },
 {
   timestamps:true  // mongoose  bizim yerimize createdAt ve updatedAt adında 2 tane alan ekliyor
